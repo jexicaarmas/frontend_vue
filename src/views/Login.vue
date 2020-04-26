@@ -1,17 +1,21 @@
-
 <template>
-  <div class="login-form">
-    <div class="lg">
-      <h2 v-if="wrongCred">Wrong credentials entered!. Please enter your correct details.</h2>
-      <form v-on:submit.prevent="loginUser">
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email" v-model="email">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" v-model="password">
-        <button type="submit">Login</button>
-      </form>
+  <!-- Default form login -->
+  <form v-on:submit.prevent="loginUser"> 
+    <p class="h4 text-center mb-4">Login</p>
+    <label for="email" class="grey-text">Email</label>
+    <input type="email" id="email" class="form-control" v-model="email" required/>
+    <br/>
+    <label for="password" class="grey-text">Contraseña</label>
+    <input type="password" id="password" class="form-control" v-model="password" required/>
+    <div class="text-center mt-4">
+      <button class="btn btn-primary" type="submit">Ingresar</button>
     </div>
-  </div>
+    <br>
+    <div v-if="wrongCred" class="alert alert-danger" role="alert">
+    Credenciales Incorrectas
+    </div>
+  </form>
+  <!-- Default form login -->
 </template>
 
 <script>
@@ -48,17 +52,5 @@
 </script>
 
 <style scoped>
-  @import url(https://fonts.googleapis.com/css?family=Quicksand) ;
-  .login-form {
-    margin: 0;
-    padding: 0;
-  }
-  .lg {
-    background-color: #606366;
-    text-align: center;
-    color: white;
-    font-family: 'Quicksand', sans-serif;
-    padding: 0;
-    margin: 78px 0;
-  }
+  
 </style>

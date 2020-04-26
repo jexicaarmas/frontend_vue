@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import login from './views/Login'
-import register from './views/Register'
-import downloads from './views/Downloads'
 import logout from './views/Logout'
 
 Vue.use(Router)

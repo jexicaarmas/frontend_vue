@@ -2,21 +2,60 @@
   <div class="home">
     <NavBar></NavBar>
     <div class="bod">
-      <h1>Welcome to Hardcore Mods</h1>
-      <h2>Wo are we?</h2>
-      <h3>We specialise in building free game mods for ETS2 and ATS to make your gaming experience fun!</h3>
-      <h2>What mods have we built so far?</h2>
-      <h3>Wanna help us in any way?. We would love to have extra additions to our team. Send us a message and we will get back to you soon</h3>
+      <table class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Referencia</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Status</th>
+                <th>Accciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="mod in APIData" :key="mod.id">
+                <td :key="mod.id">{{mod.id}}</td>
+                <td>{{mod.reference}}</td>
+                <td>{{mod.name}}</td>
+                <td>{{mod.quantity}}</td>
+                <td v-if="mod.enable ==1"> Activo </td>
+                <td v-if="mod.enable ==0"> Inactivo </td>
+                <td>
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#modalProduct">Actualizar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
     </div>
   </div>
 </template>
 
 <script>
   import NavBar from '../components/Navbar'
+  import { axiosBase } from '../api/axios-base'
+  import { mapState } from 'vuex'
+  
   export default {
     name: 'Home',
+    onIdle () { // dispatch logoutUser if no activity detected
+      this.$store.dispatch('logoutUser')
+        .then(response => {
+          this.$router.push('/')
+        })
+    },
     components: {
       NavBar
+    },
+    computed: mapState(['APIData']), // get APIData from store.state.
+    created () {
+        axiosBase.get('products', { headers: { Authorization: `Bearer ${this.$store.state.accessToken}` } }) // proof that your access token is still valid; if not the
+          .then(response => {
+            this.$store.state.APIData = response.data.response // store the response data in store
+          })
+          .catch(err => { 
+            console.log(err)
+          })
     }
   }
 </script>
@@ -28,7 +67,7 @@
     padding: 0;
   }
   .bod {
-    background-color: #606366;
+    background-color: white;
     text-align: center;
     color: white;
     font-family: 'Quicksand', sans-serif;

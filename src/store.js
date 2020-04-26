@@ -18,9 +18,6 @@ export default new Vuex.Store({
       localStorage.setItem('access_token', access)
       state.accessToken = access
     },
-    updateAccess (state, access) {
-      state.accessToken = access
-    },
     destroyToken (state) {
       state.accessToken = null
     }
